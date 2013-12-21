@@ -1,0 +1,16 @@
+*.obj
+*.exe
+*.ilk
+*.map
+*.pdb
+*.suo
+builtflt.h
+nebind.h
+neexec.h
+nefkeys.h
+nefsms.h
+nefunc.h
+nemode.h
+nename.h
+neproto.h
+nevars.h
