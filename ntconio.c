@@ -45,6 +45,8 @@ static int icursor_insmode;	/* insertion mode  cursor height      */
 static int chgd_cursor;		/* must restore cursor height on exit */
 static ENC_CHOICES my_encoding = enc_DEFAULT;
 
+static int conemu = 0;          /* whether running under conemu */
+static int cattr = 0;           /* current attributes */
 static int cfcolor = -1;	/* current forground color */
 static int cbcolor = -1;	/* current background color */
 static int nfcolor = -1;	/* normal foreground color */
@@ -82,6 +84,18 @@ static WORD
 AttrVideo(int b, int f)
 {
     WORD result;
+    if (conemu) {
+        if (cattr & VABOLD) {
+            result = ((WORD) ((12 << 4) | ForeColor(f)));
+            TRACE2(("bold AttrVideo(%d,%d) = %04x\n", f, b, result));
+            return result;
+        }
+        if (cattr & VAITAL) {
+            result = ((WORD) ((13 << 4) | ForeColor(f)));
+            TRACE2(("ital AttrVideo(%d,%d) = %04x\n", f, b, result));
+            return result;
+        }
+    }
     if (rvcolor) {
 	result = ((WORD) ((ForeColor(f) << 4) | BackColor(b)));
 	TRACE2(("rev AttrVideo(%d,%d) = %04x\n", f, b, result));
@@ -428,6 +442,7 @@ static void
 ntconio_rev(UINT attr)
 {				/* change video state */
     scflush();
+    cattr = attr;
     cbcolor = nbcolor;
     cfcolor = nfcolor;
     rvcolor = (global_g_val(GVAL_VIDEO) & VAREV) ? 1 : 0;
@@ -500,9 +515,11 @@ ntconio_open(void)
 {
     CONSOLE_CURSOR_INFO newcci;
     BOOL newcci_ok;
+    W32_CHAR wcwd[NFILEN];
 
     TRACE(("ntconio_open\n"));
 
+    conemu = getenv("ConEmuPID") != NULL;
     set_colors(NCOLORS);
     set_palette(initpalettestr);
 
@@ -519,7 +536,10 @@ ntconio_open(void)
 	hConsoleOutput = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE,
 						   0, NULL,
 						   CONSOLE_TEXTMODE_BUFFER, NULL);
+        // Workaround for ConEmu bug: save and restore current directory.
+        GetCurrentDirectory(sizeof(wcwd), wcwd);
 	SetConsoleActiveScreenBuffer(hConsoleOutput);
+        SetCurrentDirectory(wcwd);
 	GetConsoleScreenBufferInfo(hConsoleOutput, &csbi);
 	newcci_ok = GetConsoleCursorInfo(hConsoleOutput, &newcci);
 	if (newcci_ok && origcci_ok && newcci.dwSize != origcci.dwSize) {
@@ -1290,11 +1310,11 @@ ntconio_getch(void)
 	    return key;
 
 	case WINDOW_BUFFER_SIZE_EVENT:
+	    GetConsoleScreenBufferInfo(hConsoleOutput, &csbi);
 	    newscreensize(
 			     ir.Event.WindowBufferSizeEvent.dwSize.Y,
 			     ir.Event.WindowBufferSizeEvent.dwSize.X
 		);
-	    GetConsoleScreenBufferInfo(hConsoleOutput, &csbi);
 	    continue;
 
 	case MOUSE_EVENT:
