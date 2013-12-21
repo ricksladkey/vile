@@ -1,0 +1,143 @@
+# $Header: /usr/build/vile/vile/filters/RCS/makefile.2nd,v 1.28 2010/12/29 17:33:58 tom Exp $
+#
+
+.SUFFIXES: .l .c .i $o
+
+# This rule is only used for external filters since we generate explicit
+# rules to rename the entrypoints of each built-in or loadable filter.
+.l$o:
+	@RULE_CC@
+	@ECHO_CC@echo "#include <flt_defs.h>" > $*.c
+	@ECHO_CC@@LEX_CHAR_CLASSES@ $(LEX) -t $< >> $*.c
+	@ECHO_CC@$(CC) -c $(CPPFLAGS) $(CFLAGS) $*.c
+	-$(RM) $*.c
+
+.l.c:
+	@RULE_CC@
+	@ECHO_CC@echo "#include <flt_defs.h>" > $*.c
+	@ECHO_CC@@LEX_CHAR_CLASSES@ $(LEX) -t $< >> $*.c
+
+.c.i:
+	@RULE_CC@
+	@ECHO_CC@$(CPP) -C $(CPPFLAGS) $(QUOTDEFS) $< >$@
+.c$o:
+	@RULE_CC@
+	@ECHO_CC@$(CC) -c $(CPPFLAGS) $(QUOTDEFS) $(CFLAGS) $<
+
+LF_DEPS = filterio$o filters$o
+LF_ARGS = $(LF_DEPS) $(LEXLIB)
+
+CF_DEPS = filterio$o filters$o
+CF_ARGS = $(CF_DEPS)
+
+PROGS	= \
+	atr2ansi$x \
+	atr2html$x \
+	atr2text$x \
+	vile-crypt$x \
+	vile-manfilt$x
+
+ALL = 	$(PROGS) $(C_ALL) $(C_DYN) @MAKE_LEX@ $(LEX_ALL) $(LEX_DYN)
+
+# library objects:
+LOBJS = filters$o $(C_OBJ) @MAKE_LEX@ $(LEX_OBJ)
+
+all:	$(ALL) @LIBBUILTFLT@
+
+check: $(TARGET)
+	@echo Sorry, no batch tests available.
+
+INSTALL_FILES = \
+	$(FILTERS_BINDIR)/atr2ansi$x \
+	$(FILTERS_BINDIR)/atr2html$x \
+	$(FILTERS_BINDIR)/atr2text$x \
+	$(FILTERS_BINDIR)/vile-crypt$x \
+	$(FILTERS_BINDIR)/vile-manfilt$x \
+	$(DATADIR)/filters.rc \
+	$(DATADIR)/spell.rc $(INSTALL_C) $(INSTALL_DYN_C) @MAKE_LEX@ $(INSTALL_LEX) $(INSTALL_DYN_LEX) 
+
+install-filters \
+install-full \
+install :: $(INSTALL_DIRS) $(INSTALL_FILES)
+
+installdirs: $(INSTALL_DIRS)
+
+uninstall-filters \
+uninstall-full \
+uninstall ::
+	-$(RM) $(INSTALL_FILES)
+
+# defining this target, though technically (i think) correct, causes
+#  the make to fail on machines which don't have autoconf, i.e. most of them.
+#configure: configure.in aclocal.m4
+#	autoconf
+
+config.status: configure
+	$(SHELL) ./config.status --recheck
+
+mostlyclean:
+	-$(RM) *.[oi] *$(so) o$(TARGET) $(LEX_OUTPUT_ROOT).* $(BUILTSRCS) @LIBBUILTFLT@
+	-$(RM) core core.* *.stackdump *~ *.BAK *.bb* *.da *.gcov
+
+clean: mostlyclean
+	-$(SHELL) -c 'for L in *.l;do C=`basename $$L .l`.c;test -f $$C && rm -f $$C; done; exit 0'
+	-$(RM) $(ALL)
+
+distclean: clean
+	-$(RM) makefile config.status config.cache config.log config.h
+
+realclean: distclean
+	-$(RM) tags TAGS
+
+lint:
+	-$(SHELL) -c 'for L in $(C_OBJ) $(CF_DEPS); do \
+			N=`basename $$L $o`.c; \
+			$(LINT) $(CPPFLAGS) $$N; \
+		done'
+	-$(SHELL) -c 'for L in $(LEX_OBJ); do \
+			N=`basename $$L $o`.c; \
+			make $$N && $(LINT) $(CPPFLAGS) $$N; \
+		done'
+
+tags:
+	$(CTAGS) *.[chyl]
+
+TAGS:
+	$(ETAGS) *.[chyl]
+
+dotags:
+	dotags *.[chyl]
+
+@LIB_PREFIX@vlflt.a : $(LOBJS)
+	$(AR) $(AR_OPTS) $@ $(LOBJS)
+	$(RANLIB) $@
+
+ATR2ANSI_O = atr2ansi$o	unfilter$o
+ATR2HTML_O = atr2html$o	unfilter$o
+ATR2TEXT_O = atr2text$o	unfilter$o
+VL_CRYPT_O = ecrypt$o	encrypt$o
+
+atr2ansi$x : $(ATR2ANSI_O) ; $(LINK) -o $@ $(ATR2ANSI_O) $(CFLAGS) $(LDFLAGS) $(LIBS)
+atr2html$x : $(ATR2HTML_O) ; $(LINK) -o $@ $(ATR2HTML_O) $(CFLAGS) $(LDFLAGS) $(LIBS)
+atr2text$x : $(ATR2TEXT_O) ; $(LINK) -o $@ $(ATR2TEXT_O) $(CFLAGS) $(LDFLAGS) $(LIBS)
+vile-crypt$x :	$(VL_CRYPT_O)	; $(LINK) -o $@ $(VL_CRYPT_O) $(CFLAGS) $(LDFLAGS) $(LIBS)
+vile-manfilt$x : manfilt$o	; $(LINK) -o $@ manfilt$o $(CFLAGS) $(LDFLAGS) $(LIBS)
+
+encrypt$o : $(top_srcdir)/encrypt.c
+	@RULE_CC@
+	@ECHO_CC@$(CC) -c $(CPPFLAGS) $(QUOTDEFS) $(CFLAGS) $?
+
+$(FILTERS_BINDIR)/atr2ansi$x :	   atr2ansi$x		; $(INSTALL) $? $@
+$(FILTERS_BINDIR)/atr2html$x :	   atr2html$x		; $(INSTALL) $? $@
+$(FILTERS_BINDIR)/atr2text$x :	   atr2text$x		; $(INSTALL) $? $@
+$(FILTERS_BINDIR)/vile-crypt$x :   vile-crypt$x		; $(INSTALL) $? $@
+$(FILTERS_BINDIR)/vile-manfilt$x : vile-manfilt$x	; $(INSTALL) $? $@
+
+$(DATADIR)/filters.rc :		$(srcdir)/filters.rc	; $(INSTALL_DATA) $? $@
+$(DATADIR)/spell.rc :		$(srcdir)/spell.rc	; $(INSTALL_DATA) $? $@
+
+$(INSTALL_DIRS):
+	mkdir -p $@
+
+ALWAYS:
+

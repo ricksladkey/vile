@@ -1,0 +1,10 @@
+# $XTermId: xvile.desktop,v 1.3 2010/03/05 09:47:57 tom Exp $
+[Desktop Entry]
+Name=XVile
+Comment=VI Like Emacs
+Exec=xvile
+Terminal=false
+Type=Application
+Encoding=UTF-8
+Icon=vile
+Categories=Application;Utility;TextEditor;

@@ -1,0 +1,453 @@
+; $Id: filters.rc,v 1.242 2013/06/25 00:55:00 tom Exp $
+; majormodes in this file are ordered alphabetically for convenience - the
+; precedence used by vile is strictly alphabetic, counting case.
+
+; This file depends upon modes.rc, which may have been source'd by vileinit.rc
+; so we will check if it was not source'd.
+~if &error %filters-modes
+	source modes.rc
+~elseif &seq %filters-modes ''
+	source modes.rc
+~endif
+unsetv %filters-modes
+
+define-mode ada
+~with define-submode ada
+	filtername	'vile-ada-filt -i'
+~endwith
+
+define-mode ant
+~with define-submode ant
+	filtername	'vile-xml-filt -k ant'
+~endwith
+
+define-mode as
+~with define-submode as
+	filtername	'vile-as-filt -i'
+~endwith
+
+define-mode asm
+~with define-submode asm
+	filtername	'vile-asm-filt -i'
+~endwith
+
+define-mode asp
+~with define-submode asp
+	filtername	'vile-html-filt -a'
+~endwith
+
+define-mode au3
+~with define-submode au3
+	filtername	'vile-au3-filt -i'
+~endwith
+
+define-mode basic
+~with define-submode basic
+	filtername	'vile-basic-filt -i'
+~endwith
+
+define-mode bash
+~with define-submode bash
+	filtername	'vile-sh-filt -k bash'
+~endwith
+
+define-mode bat
+~with define-submode bat
+	filtername	'vile-bat-filt -i'
+~endwith
+
+define-mode bnf
+~with define-submode bnf
+	filtername	'vile-bnf-filt -i'
+~endwith
+
+define-mode cpp
+~with define-submode cpp
+	filtername	'vile-c-filt -k cpp'
+~endwith
+
+define-mode cs
+~with define-submode cs
+	filtername	'vile-c-filt -# -k cs'
+~endwith
+
+define-mode css
+~with define-submode css
+	filtername	'vile-css-filt -i'
+~endwith
+
+define-mode csh
+~with define-submode csh
+	filtername	'vile-sh-filt -k csh'
+~endwith
+
+; using txt filter will highlight quoted strings
+define-mode csv
+~with define-submode csv
+	filtername	'vile-txt-filt'
+~endwith
+
+define-mode def
+~with define-submode def
+	filtername	'vile-def-filt -i'
+~endwith
+
+define-mode delphi
+~with define-submode delphi
+	filtername	'vile-pas-filt -i -k delphi'
+~endwith
+
+define-mode dcl
+~with define-submode dcl
+	filtername	'vile-dcl-filt -i'
+~endwith
+
+define-mode docbook
+~with define-submode docbook
+	filtername	'vile-xml-filt -k docbook'
+~endwith
+
+define-mode dtd
+~with define-submode dtd
+	filtername	'vile-xml-filt -k xsl'
+~endwith
+
+define-mode erb
+~with define-submode erb
+	filtername	'vile-ruby-filt -e -k rb'
+~endwith
+
+define-mode esql
+~with define-submode esql
+	filtername	'vile-esql-filt -i'
+~endwith
+
+define-mode haskell
+~with define-submode haskell
+	filtername	'vile-hs-filt'
+~endwith
+
+define-mode ini
+~with define-submode ini
+	filtername	'vile-ini-filt -i'
+~endwith
+
+define-mode iss
+~with define-submode ini
+	filtername	'vile-iss-filt -i'
+~endwith
+
+define-mode java
+~with define-submode java
+	filtername	'vile-c-filt -j -p -k java'
+~endwith
+
+define-mode js
+~with define-submode js
+	filtername	'vile-c-filt -j -s -p -k js'
+~endwith
+
+define-mode jsp
+~with define-submode jsp
+	filtername	'vile-html-filt -j'
+~endwith
+
+define-mode ksh
+~with define-submode ksh
+	filtername	'vile-sh-filt -K -k ksh'
+~endwith
+
+define-mode latex
+~with define-submode latex
+	filtername	'vile-latex-filt -a'
+~endwith
+
+define-mode lisp
+~with define-submode lisp
+	filtername	'vile-lisp-filt -i'
+~endwith
+
+define-mode lua
+~with define-submode lua
+	filtername	'vile-lua-filt -i'
+~endwith
+
+define-mode mvn
+~with define-submode mvn
+	filtername	'vile-xml-filt -k mvn'
+~endwith
+
+define-mode nmake
+~with define-submode nmake
+	filtername	'vile-make-filt'
+~endwith
+
+define-mode nsis
+~with define-submode nsis
+	filtername	'vile-conf-filt -i -k nsis'
+~endwith
+
+define-mode objc
+~with define-submode objc
+	filtername	'vile-c-filt -o -k objc'
+~endwith
+
+define-mode pas
+~with define-submode pas
+	filtername	'vile-pas-filt -i'
+~endwith
+
+define-mode pc
+~with define-submode pc
+	filtername	'vile-tc-filt -k pc'
+~endwith
+
+define-mode powershell
+~with define-submode powershell
+	filtername	'vile-ps1-filt -k ps1 -i'
+~endwith
+
+define-mode prolog
+~with define-submode prolog
+	filtername	'vile-ecl-filt -k prolog'
+~endwith
+
+define-mode rb
+~with define-submode rb
+	filtername	'vile-ruby-filt -k rb'
+~endwith
+
+define-mode RCS
+~with define-submode RCS
+	filtername	'vile-rcs-filt'
+~endwith
+
+define-mode rexx
+~with define-submode rexx
+	filtername	'vile-rexx-filt -i'
+~endwith
+
+define-mode rpm
+~with define-submode rpm
+	filtername	'vile-rpm-filt -i'
+~endwith
+
+define-mode SCCS
+~with define-submode SCCS
+	filtername	'vile-sccs-filt'
+~endwith
+
+define-mode scheme
+~with define-submode scheme
+	filtername	'vile-scheme-filt -i'
+~endwith
+
+define-mode sql
+~with define-submode sql
+	filtername	'vile-sql-filt -i'
+~endwith
+
+define-mode tex
+~with define-submode tex
+	filtername	'vile-latex-filt -k tex'
+~endwith
+
+define-mode vb
+~with define-submode vb
+	filtername	'vile-basic-filt -i -k vb'
+~endwith
+
+define-mode vb6
+~with define-submode vb6
+	filtername	'vile-basic-filt -i -k vb6'
+~endwith
+
+define-mode vbs
+~with define-submode vbs
+	filtername	'vile-basic-filt -i -k vbs'
+~endwith
+
+define-mode vim
+~with define-submode vim
+	filtername	'vile-vile-filt -k vim'
+~endwith
+
+define-mode wbt
+~with define-submode wbt
+	filtername	'vile-wbt-filt -i'
+~endwith
+
+define-mode xpm
+~with define-submode xpm
+	filtername	'vile-c-filt'
+~endwith
+
+define-mode xsl
+~with define-submode xsl
+	filtername	'vile-xml-filt -k xsl'
+~endwith
+
+define-mode zsh
+~with define-submode zsh
+	filtername	'vile-sh-filt -k zsh'
+~endwith
+
+store-procedure HighlightFilter 'Invoke syntax-highlighting filter on the current buffer'
+    ~if &not $highlight
+	~return
+    ~elseif &seq $majormode ''
+	~return
+    ~elseif &filter $majormode
+	~local $curcol $curline
+	~hidden goto-beginning-of-file
+	~hidden attribute-directly end-of-file $majormode
+	~return
+    ~else
+	~local $curcol $curline
+	~local %filtername %filterpath %filteropts
+	~hidden goto-beginning-of-file
+	~if &seq $filtername ''
+		set-variable %filtername &cat 'vile-' &cat $majormode '-filt'
+	~else
+		set-variable %filtername $filtername
+	~endif
+	set-variable %filterpath &word 0 %filtername
+	set-variable %filteropts &right %filtername &add 1 &len %filterpath
+	~if &seq '' &lookup e+p &cat %filterpath $exec-suffix
+		set-variable %filterpath &lookup e+l &cat %filterpath $exec-suffix
+	~endif
+	~if &not &seq %filterpath ''
+		~hidden attribute-from-filter end-of-file \
+			&cat &pquote %filterpath \
+			&cat %filteropts \
+			&cat ' -t' $tabstop
+	~endif
+    ~endif
+~endm
+store-procedure HighlightFilterMsg 'Attach highlighting to the current buffer'
+	HighlightFilter
+	write-message '[Attaching attributes...]'
+~endm
+bind-key HighlightFilterMsg ^X-q
+
+store-procedure HighlightClear 'Clear all highlighting from the current buffer'
+	~local $curcol $curline
+	~hidden goto-beginning-of-file
+	~hidden clear-attributes-til goto-char
+~endm
+bind-key HighlightClear ^X-Q
+
+store-procedure set-highlighting ma 'Set a majormode and invoke highlighting'
+	; show-variables
+	write-message $1
+	~force setl $1
+	HighlightFilter
+~endm
+
+; Normally filtermsgs is off since it would slow down autocolor.  This macro
+; turns it on temporarily to create an error-buffer which can be used to walk
+; through the syntax errors.
+;
+; It is implemented only for built-in filters since vile's pipes would merge
+; the error messages with the marked-up file.
+store-procedure show-filtermsgs 'Show syntax-filter error messages for current buffer'
+	~if &error &classof filtermsgs
+		write-message 'This only works for built-in filters'
+	~elseif &error &classof highlight
+		write-message 'Cannot setup highlighting'
+	~elseif &seq $majormode ''
+		write-message 'No majormode is associated with this buffer'
+	~elseif &filter $majormode
+		~local $filtermsgs $highlight
+		~local %myBuffer
+		setv %myBuffer='[Filter Messages]'
+		set highlight
+		set filtermsgs
+		; make sure there are no prior results to confuse us
+		~if &isa buffer %myBuffer
+			~quiet ~hidden kill-buffer %myBuffer
+		~endif
+		HighlightFilter
+		~if &isa buffer %myBuffer
+			popup-buffer %myBuffer
+			goto-beginning-of-file
+			error-buffer %myBuffer
+		~else
+			write-message 'No messages found'
+		~endif
+	~else
+		write-message 'This only works for built-in filters'
+	~endif
+~endm
+
+; Show the keywords which can be highlighted, in the [Filter Messages] buffer.
+store-procedure show-filtercolors 'Show syntax-filter colors for current buffer'
+	~local %myBuffer %myFiltername %hisBuffer
+	setv %myBuffer='[Filter Messages]'
+	~if &error &classof highlight
+		write-message 'Cannot setup highlighting'
+	~elseif &seq $majormode ''
+		write-message 'No majormode is associated with this buffer'
+	~elseif &error &classof filtermsgs
+		setv %hisBuffer=$cbufname
+		~if &seq $filtername ''
+			setv %myFiltername &cat "!" &cat 'vile-' &cat $majormode '-filt -Q'
+		~else
+			setv %myFiltername &cat "!" &cat $filtername ' -Q'
+		~endif
+		; make sure there are no prior results to confuse us
+		~if &isa buffer %myBuffer
+			~quiet ~hidden kill-buffer %myBuffer
+		~endif
+		edit-file %myFiltername
+		rename-buffer %myBuffer
+		buffer %hisBuffer
+		~if &isa buffer %myBuffer
+			popup-buffer %myBuffer
+			goto-beginning-of-file
+			set-highlighting 'keymode'
+		~else
+			write-message 'No keywords found'
+		~endif
+		buffer %hisBuffer
+	~elseif &filter $majormode
+		~local $filtermsgs $highlight $filtername
+		setv %hisBuffer=$cbufname
+		setv %myFiltername=$filtername
+		set highlight
+		~if &seq $filtername ''
+			setv $filtername &cat 'vile-' &cat $majormode '-filt -Q'
+		~else
+			setv $filtername &cat $filtername ' -Q'
+		~endif
+		set filtermsgs
+		; make sure there are no prior results to confuse us
+		~if &isa buffer %myBuffer
+			~quiet ~hidden kill-buffer %myBuffer
+		~endif
+		HighlightFilter
+		unset filtermsgs
+		setv $filtername=%myFiltername
+		~if &isa buffer %myBuffer
+			popup-buffer %myBuffer
+			goto-beginning-of-file
+			set-highlighting 'keymode'
+		~else
+			write-message 'No keywords found'
+		~endif
+		buffer %hisBuffer
+		HighlightFilter
+	~else
+		write-message 'This ONLY works for built-in filters'
+	~endif
+~endm
+
+; If we have built-in filters, and colors are available, simply turn on
+; the syntax highlighting.
+~if &and \
+	&not &error $filter-list \
+	&not &error $ncolors
+	setv $read-hook HighlightFilter
+	set autocolor=5000
+	setv $autocolor-hook HighlightFilter
+~endif
