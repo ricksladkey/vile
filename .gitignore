@@ -14,3 +14,8 @@ nemode.h
 nename.h
 neproto.h
 nevars.h
+filters/builtflt.lib
+filters/mk-1st.tmp
+filters/mk-2nd.tmp
+filters/none
+none

@@ -515,7 +515,6 @@ ntconio_open(void)
 {
     CONSOLE_CURSOR_INFO newcci;
     BOOL newcci_ok;
-    W32_CHAR wcwd[NFILEN];
 
     TRACE(("ntconio_open\n"));
 
@@ -536,10 +535,7 @@ ntconio_open(void)
 	hConsoleOutput = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE,
 						   0, NULL,
 						   CONSOLE_TEXTMODE_BUFFER, NULL);
-	/* Workaround for ConEmu bug: save and restore current directory. */
-	//GetCurrentDirectory(sizeof(wcwd) / sizeof(wcwd[0]), wcwd);
 	SetConsoleActiveScreenBuffer(hConsoleOutput);
-	//SetCurrentDirectory(wcwd);
 	GetConsoleScreenBufferInfo(hConsoleOutput, &csbi);
 	newcci_ok = GetConsoleCursorInfo(hConsoleOutput, &newcci);
 	if (newcci_ok && origcci_ok && newcci.dwSize != origcci.dwSize) {
@@ -585,7 +581,9 @@ ntconio_close(void)
     if (hOldConsoleOutput) {
 	TRACE(("...restoring screen buffer\n"));
 	SetConsoleActiveScreenBuffer(hOldConsoleOutput);
-	CloseHandle(hConsoleOutput);
+	//CloseHandle(hConsoleOutput);
+	// For ConEmu?
+	//Sleep(20);		/* sleep a bit, but be responsive to keybd input */
     }
     SetConsoleCtrlHandler(nthandler, FALSE);
     SetConsoleMode(hConsoleInput, ENABLE_LINE_INPUT | ENABLE_ECHO_INPUT | ENABLE_PROCESSED_INPUT);
