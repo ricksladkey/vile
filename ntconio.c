@@ -85,16 +85,16 @@ AttrVideo(int b, int f)
 {
     WORD result;
     if (conemu) {
-        if (cattr & VABOLD) {
-            result = ((WORD) ((12 << 4) | ForeColor(f)));
-            TRACE2(("bold AttrVideo(%d,%d) = %04x\n", f, b, result));
-            return result;
-        }
-        if (cattr & VAITAL) {
-            result = ((WORD) ((13 << 4) | ForeColor(f)));
-            TRACE2(("ital AttrVideo(%d,%d) = %04x\n", f, b, result));
-            return result;
-        }
+	if (cattr & VABOLD) {
+	    result = ((WORD) ((12 << 4) | ForeColor(f)));
+	    TRACE2(("bold AttrVideo(%d,%d) = %04x\n", f, b, result));
+	    return result;
+	}
+	if (cattr & VAITAL) {
+	    result = ((WORD) ((13 << 4) | ForeColor(f)));
+	    TRACE2(("ital AttrVideo(%d,%d) = %04x\n", f, b, result));
+	    return result;
+	}
     }
     if (rvcolor) {
 	result = ((WORD) ((ForeColor(f) << 4) | BackColor(b)));
@@ -536,10 +536,10 @@ ntconio_open(void)
 	hConsoleOutput = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE,
 						   0, NULL,
 						   CONSOLE_TEXTMODE_BUFFER, NULL);
-        // Workaround for ConEmu bug: save and restore current directory.
-        GetCurrentDirectory(sizeof(wcwd), wcwd);
+	/* Workaround for ConEmu bug: save and restore current directory. */
+	GetCurrentDirectory(sizeof(wcwd) / sizeof(wcwd[0]), wcwd);
 	SetConsoleActiveScreenBuffer(hConsoleOutput);
-        SetCurrentDirectory(wcwd);
+	SetCurrentDirectory(wcwd);
 	GetConsoleScreenBufferInfo(hConsoleOutput, &csbi);
 	newcci_ok = GetConsoleCursorInfo(hConsoleOutput, &newcci);
 	if (newcci_ok && origcci_ok && newcci.dwSize != origcci.dwSize) {

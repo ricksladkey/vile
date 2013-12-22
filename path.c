@@ -1590,7 +1590,7 @@ lengthen_path(char *path)
 #if OPT_UNC_PATH
 	if (drive == EOS) {
 	    W32_CHAR uncdir[NFILEN];
-	    GetCurrentDirectory(sizeof(uncdir) / sizeof(W32_CHAR), uncdir);
+	    GetCurrentDirectory(sizeof(uncdir) / sizeof(uncdir[0]), uncdir);
 	    cwd = bsl_to_sl_inplace(asc_charstring(uncdir));
 	    free_cwd = TRUE;
 	} else
