@@ -537,9 +537,9 @@ ntconio_open(void)
 						   0, NULL,
 						   CONSOLE_TEXTMODE_BUFFER, NULL);
 	/* Workaround for ConEmu bug: save and restore current directory. */
-	GetCurrentDirectory(sizeof(wcwd) / sizeof(wcwd[0]), wcwd);
+	//GetCurrentDirectory(sizeof(wcwd) / sizeof(wcwd[0]), wcwd);
 	SetConsoleActiveScreenBuffer(hConsoleOutput);
-	SetCurrentDirectory(wcwd);
+	//SetCurrentDirectory(wcwd);
 	GetConsoleScreenBufferInfo(hConsoleOutput, &csbi);
 	newcci_ok = GetConsoleCursorInfo(hConsoleOutput, &newcci);
 	if (newcci_ok && origcci_ok && newcci.dwSize != origcci.dwSize) {
