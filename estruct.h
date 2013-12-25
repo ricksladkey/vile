@@ -491,6 +491,10 @@ typedef unsigned short	mode_t;
 #define OPT_TCL 0	/* normally set by configure-script */
 #endif
 
+#ifndef OPT_EDITOR_CONFIG
+#define OPT_EDITOR_CONFIG 0 /* normally set by configure-script */
+#endif
+
 /*
  * Widgets for xvile
  */

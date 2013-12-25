@@ -118,7 +118,7 @@ CFLAGS   = $(cvarsmt) $(CC_DEBUG) -nologo -DWIN32_LEAN_AND_MEAN \
 LDFLAGS  = -nologo $(MY_LDOPT)
 SCREEN   = ntconio
 LIBS     = $(LD_DEBUG) $(conlflags) $(conlibsmt) user32.lib comdlg32.lib \
-           ole32.lib shell32.lib $(VILE_PERL_LIB)
+           ole32.lib shell32.lib $(VILE_PERL_LIB) $(EDITOR_CONFIG_LIB)
 EXTRAOBJ = dumbterm.obj
 !endif
 
@@ -130,7 +130,7 @@ CFLAGS   = $(cvarsmt) $(CC_DEBUG) -nologo -DWIN32_LEAN_AND_MEAN \
 LDFLAGS  = -nologo /subsystem:windows /incremental:no $(MY_LDOPT)
 SCREEN   = ntwinio
 LIBS     = $(LD_DEBUG) $(guilflags) $(guilibsmt) ole32.lib shell32.lib \
-           $(VILE_PERL_LIB) $(OLELIBS)
+           $(VILE_PERL_LIB) $(OLELIBS) $(EDITOR_CONFIG_LIB)
 EXTRAOBJ = makeargv.obj
 EXTRA    = winvile.res
 !endif
@@ -157,6 +157,10 @@ OLELIBS  = uuid.lib oleaut32.lib comsuppw.lib
 !endif
 EXTRA    = 
 !endif
+
+EDITOR_CONFIG_HOME = C:/Program Files/editorconfig
+CFLAGS	= $(CFLAGS) -DOPT_EDITOR_CONFIG -I"$(EDITOR_CONFIG_HOME)/include"
+EDITOR_CONFIG_LIB = "$(EDITOR_CONFIG_HOME)/lib/editorconfig_static.lib" Shlwapi.lib
 
 !IF "$(CFG)" == "winvile-with-perl" || "$(CFG)" == "vile-with-perl"
 #
@@ -232,7 +236,7 @@ SRC = 	main.c $(SCREEN).c \
 	tags.c tbuff.c termio.c ucrypt.c undo.c vl_ctype.c \
 	version.c window.c word.c wordmov.c map.c \
 	w32cbrd.c w32cmd.c w32misc.c w32oo.cpp w32pipe.c \
-	wcwidth.c $(PERLSRCS) \
+	wcwidth.c editconf.c $(PERLSRCS) \
 	$(OLESRCS)
 
 OBJ = 	main.obj $(SCREEN).obj \
@@ -247,7 +251,7 @@ OBJ = 	main.obj $(SCREEN).obj \
 	tags.obj tbuff.obj termio.obj ucrypt.obj undo.obj vl_ctype.obj \
 	version.obj window.obj word.obj wordmov.obj map.obj \
 	w32cbrd.obj w32cmd.obj w32misc.obj w32oo.obj w32pipe.obj \
-	wcwidth.obj $(PERLOBJS) \
+	wcwidth.obj editconf.obj $(PERLOBJS) \
 	$(OLEOBJS) $(DBGOBJS) $(EXTRAOBJ) $(EXTRA)
 
 .c.obj:

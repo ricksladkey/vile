@@ -1661,6 +1661,10 @@ extern	void	gui_usage(char *program, const char *const *options, size_t length);
 extern	void	gui_update_scrollbar	(WINDOW *uwp);
 #endif
 
+#if OPT_EDITOR_CONFIG
+extern void editor_config_readhook(BUFFER *bp);
+#endif
+
 #if NO_LEAKS
 extern	void	bind_leaks (void);
 extern	void	bp_leaks (void);
