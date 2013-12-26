@@ -19,6 +19,7 @@
 #	WIDE - nonempty for Unicode build
 #	TRACE - nonempty to suppress tracing when building a debug-executable.
 #	PROGNAME - vile/winvile $progname value
+#	EDITORCONFIG_HOME - nonempty for to use editorconfig
 #	VILEDEFS - other options, as needed
 ###############################################################################
 
@@ -158,9 +159,12 @@ OLELIBS  = uuid.lib oleaut32.lib comsuppw.lib
 EXTRA    = 
 !endif
 
-EDITORCONFIG_HOME = C:/Program Files/editorconfig
+!IF "$(EDITORCONFIG_HOME)" != ""
 CFLAGS	= $(CFLAGS) -DOPT_EDITORCONFIG -I"$(EDITORCONFIG_HOME)/include"
 EDITORCONFIG_LIB = "$(EDITORCONFIG_HOME)/lib/editorconfig_static.lib" Shlwapi.lib
+!else
+EDITORCONFIG_LIB =
+!ENDIF
 
 !IF "$(CFG)" == "winvile-with-perl" || "$(CFG)" == "vile-with-perl"
 #
