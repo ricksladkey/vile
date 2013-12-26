@@ -1,4 +1,4 @@
-# $Header: /usr/build/vile/vile/filters/RCS/genmake.mak,v 1.45 2013/06/25 00:53:51 tom Exp $
+# $Header$
 # This is a list of filter root names and whether .c or .l files define the
 # filter.  Except for vile-crypt and vile-manfilt (which do not correspond to
 # majormodes), the filter names are constructed as vile-{root}-filt.

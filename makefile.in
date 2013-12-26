@@ -286,7 +286,7 @@ VILESRC = main.c api.c basic.c bind.c btree.c btree.c buffer.c csrch.c \
 	modes.c msgs.c npopen.c nullterm.c oneliner.c opers.c path.c random.c \
 	regexp.c region.c search.c select.c spawn.c statevar.c tags.c \
 	tbuff.c termio.c ucrypt.c undo.c vl_ctype.c version.c \
-	watch.c window.c word.c wordmov.c xterm.c
+	watch.c window.c word.c wordmov.c xterm.c editconf.c
 
 ALLSRC = $(VILESRC) $(SCREENS) $(OTHERSRC) $(HDRS)
 
@@ -334,7 +334,7 @@ OBJ =	$(SCREEN)$o \
 	modes$o msgs$o nullterm$o oneliner$o opers$o path$o random$o \
 	regexp$o region$o search$o tags$o \
 	tbuff$o termio$o undo$o version$o vl_ctype$o \
-	watch$o window$o word$o wordmov$o @EXTRAOBJS@
+	watch$o window$o word$o wordmov$o editconf$o @EXTRAOBJS@
 OBJ2 =	@EXTRAOBJS2@
 
 # This should be "$(OBJ:$o=.c)", but IRIX64's make (and some not very old

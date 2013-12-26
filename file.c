@@ -1726,8 +1726,8 @@ readin(char *fname, int lockfl, BUFFER *bp, int mflg)
      */
     do_modelines(bp);
 #endif
-#if OPT_EDITOR_CONFIG
-    editor_config_readhook(bp);
+#if OPT_EDITORCONFIG
+    editorconfig_readhook(bp);
 #endif
 #if OPT_HOOKS
     if (s <= FIOEOF && (bp == curbp))

@@ -1,3 +1,5 @@
+*.o
+*.a
 *.obj
 *.exe
 *.ilk
@@ -5,6 +7,10 @@
 *.pdb
 *.suo
 builtflt.h
+config.h
+config.log
+config.status
+makefile
 nebind.h
 neexec.h
 nefkeys.h
@@ -14,8 +20,9 @@ nemode.h
 nename.h
 neproto.h
 nevars.h
+none
+filters/makefile
 filters/builtflt.lib
 filters/mk-1st.tmp
 filters/mk-2nd.tmp
 filters/none
-none
