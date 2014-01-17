@@ -73,7 +73,7 @@ define-mode asp
 define-mode au3
 ~with define-submode au3
 	suffixes	'\.au3$'
-	dos
+	;dos
 	ignorecase
 	comment-prefix	'^\s*;'
 	comments	'^\s*;\s\+\s*$'
@@ -120,7 +120,7 @@ define-mode bat
 ~with define-submode bat
 	suffixes	'\.\(bat\|cmd\)$'
 	pre '\s*\(@\)\?echo\s*\(on\|off\)\?$'
-	dos
+	;dos
 	ignorecase
 	comment-prefix '^\s*rem\>'
 	comments   '^\s*rem\>\s\+\s*$'
@@ -180,7 +180,7 @@ define-mode cs
 	cindent-chars   &cat ':#' $fences
 	tabstop=4
 	shiftwidth=4
-	dos
+	;dos
 	sections='^\(\([{]\)\|\(\s*\(public\|private\|protected\|static\).*[(]\)\)'
 ~elsewith define-submode cs group 'region'
 	fence-if	'^\s*#region\>'
@@ -251,7 +251,7 @@ define-mode delphi
 ~else
 	suffixes	'\.\(dfm\|dpr\)$'
 ~endif
-	dos
+	;dos
 	before "pas"
 	ignorecase
 ; no mistake - pascal fence-fi has no useful marker past the last else
@@ -275,7 +275,7 @@ define-mode def
 ~with define-submode def
 	suffixes	'\.\(def\)$'
 	ignorecase
-	dos
+	;dos
 ~endwith
 
 define-mode diff
@@ -407,7 +407,7 @@ define-mode html
 define-mode midl
 ~with define-submode midl
 	suffixes	'\.\(idl\|odl\)$'
-	dos
+	;dos
 ~endwith
 
 define-mode mcrl
@@ -435,7 +435,7 @@ define-mode ini
 ~with define-submode ini
 	suffixes	'\.\(ini\|reg\|vbp\|clw\)$'
 	ignorecase
-	dos
+	;dos
 ~endwith
 
 define-mode info
@@ -459,7 +459,7 @@ define-mode iss
 ~with define-submode iss
 	suffixes	'\.\(iss\)$'
 	ignorecase
-	dos
+	;dos
 	comment-prefix	'^\s*\(;\|//\)'
 	comments	'^\s*\(;\|//\)\s+*$'
 ~endwith
@@ -616,7 +616,7 @@ define-mode newsrc
 define-mode nmake
 ~with define-submode nmake
 	suffixes	'\.dsp$'
-	dos
+	;dos
 	comment-prefix	'^\s*[!#]'
 	comments	'^\s*[!#]\s*$'
 ~with define-submode nmake group 'nmake'
@@ -641,7 +641,7 @@ define-mode nsis
 ~with define-submode nsis
 	suffixes	'\.\(nsi\)$'
 	ignorecase
-	dos
+	;dos
 ~endwith
 
 define-mode objc
@@ -791,7 +791,7 @@ define-mode rtf
 ~with define-submode rtf
 	preamble	'^{\\rtf\d'
 	suffixes	'\.rtf$'
-	dos
+	;dos
 	notabinsert
 ~endwith
 
@@ -977,7 +977,7 @@ define-mode vb
 	qualifiers=all
 	comment-prefix	"^\\s*'"
 	comments	"^\\s*'\\s\\+\\s*$"
-	dos
+	;dos
 	ignorecase
 	notabinsert
 	tabstop=4
@@ -1035,7 +1035,7 @@ define-mode vb6
 	qualifiers=all
 	comment-prefix	"^\\s*'"
 	comments	"^\\s*'\\s\\+\\s*$"
-	dos
+	;dos
 	ignorecase
 	notabinsert
 	tabstop=4
