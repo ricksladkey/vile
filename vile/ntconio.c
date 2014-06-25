@@ -710,6 +710,23 @@ decode_key_event(INPUT_RECORD * irp)
     if (!irp->Event.KeyEvent.bKeyDown)
 	return (NOKYMAP);
 
+#ifdef UNICODE
+    TRACE(("decode_key_event(%c=%02x, Virtual=%#x,%#x, State=%#x)\n",
+	   irp->Event.KeyEvent.uChar.UnicodeChar,
+	   irp->Event.KeyEvent.uChar.UnicodeChar,
+	   irp->Event.KeyEvent.wVirtualKeyCode,
+	   irp->Event.KeyEvent.wVirtualScanCode,
+	   irp->Event.KeyEvent.dwControlKeyState));
+
+    if ((key = irp->Event.KeyEvent.uChar.UnicodeChar) != 0) {
+	if (isCntrl(key)) {
+	    DWORD cstate = state & ~(LEFT_CTRL_PRESSED | RIGHT_CTRL_PRESSED);
+	    if (isModified(cstate))
+		key = modified_key(key, cstate);
+	}
+	return key;
+    }
+#else
     TRACE(("decode_key_event(%c=%02x, Virtual=%#x,%#x, State=%#x)\n",
 	   irp->Event.KeyEvent.uChar.AsciiChar,
 	   irp->Event.KeyEvent.uChar.AsciiChar,
@@ -725,6 +742,7 @@ decode_key_event(INPUT_RECORD * irp)
 	}
 	return key;
     }
+#endif
 
     key = irp->Event.KeyEvent.wVirtualKeyCode;
     if ((state & (RIGHT_CTRL_PRESSED | LEFT_CTRL_PRESSED)) != 0
