@@ -6,6 +6,8 @@
 *.map
 *.pdb
 *.suo
+*.tmp
+*.lib
 builtflt.h
 config.h
 config.log

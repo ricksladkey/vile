@@ -4,6 +4,7 @@
 # $Header: /usr/build/vile/vile/RCS/makefile.wnt,v 1.107 2012/03/08 00:15:34 tom Exp $
 #
 #
+APPVER = 5.02
 !include <ntwin32.mak>
 
 ###############################################################################

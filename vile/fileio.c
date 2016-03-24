@@ -983,7 +983,7 @@ ffgetline(size_t *lenp)
 #  if SYS_VMS
 #    define	isready_c(p)	( (*p)->_cnt > 0)
 #  endif
-#  if SYS_WINNT && !defined( __BORLANDC__ )
+#  if SYS_WINNT && !defined( __BORLANDC__ ) && !defined(CC_MSVC)
 #    define	isready_c(p)	( (p)->_cnt > 0)
 #  endif
 #endif

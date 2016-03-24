@@ -1,3 +1,3 @@
 setlocal
-call "%VS100COMNTOOLS%vsvars32.bat"
+call "%VS140COMNTOOLS%vsvars32.bat"
 nmake -f makefile.wnt clean

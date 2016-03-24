@@ -169,10 +169,28 @@ scflush(void)
 				       hConsoleOutput, linebuf, bufpos,
 				       coordCursor, &written
 	    );
-	FillConsoleOutputAttribute(
-				      hConsoleOutput, currentAttribute,
-				      bufpos, coordCursor, &written
-	    );
+        if (crow == csbi.dwMaximumWindowSize.Y - 1)
+        {
+            /* Hack to force message line to normal colors */
+            int old_rvcolor = rvcolor;
+            int old_cattr = cattr;
+            rvcolor = 0;
+            cattr = 0;
+            WORD normalAttribute = AttrColor(gbcolor, gfcolor);
+            rvcolor = old_rvcolor;
+            cattr = old_cattr;
+            FillConsoleOutputAttribute(
+                                          hConsoleOutput, normalAttribute,
+                                          bufpos, coordCursor, &written
+                );
+        }
+        else
+        {
+            FillConsoleOutputAttribute(
+                                          hConsoleOutput, currentAttribute,
+                                          bufpos, coordCursor, &written
+                );
+        }
 	ccol += bufpos;
 	bufpos = 0;
     }
@@ -227,10 +245,28 @@ erase_at(COORD coordCursor, int length)
 				  hConsoleOutput, blank, length,
 				  coordCursor, &written
 	);
-    FillConsoleOutputAttribute(
-				  hConsoleOutput, currentAttribute, length,
-				  coordCursor, &written
-	);
+    if (crow == csbi.dwMaximumWindowSize.Y - 1)
+    {
+        /* Hack to force message line to normal colors */
+        int old_rvcolor = rvcolor;
+        int old_cattr = cattr;
+        rvcolor = 0;
+        cattr = 0;
+        WORD normalAttribute = AttrColor(gbcolor, gfcolor);
+        rvcolor = old_rvcolor;
+        cattr = old_cattr;
+        FillConsoleOutputAttribute(
+                                      hConsoleOutput, normalAttribute, length,
+                                      coordCursor, &written
+            );
+    }
+    else
+    {
+        FillConsoleOutputAttribute(
+                                      hConsoleOutput, currentAttribute, length,
+                                      coordCursor, &written
+            );
+    }
 }
 
 /* erase to the end of the line */
@@ -456,10 +492,10 @@ ntconio_rev(UINT attr)
 	else if (attr & VACOLOR)
 	    cfcolor = ((VCOLORNUM(attr)) & (NCOLORS - 1));
 
-	if (cfcolor == ENUM_UNKNOWN)
-	    cfcolor = DFT_FCOLOR;
-	if (cbcolor == ENUM_UNKNOWN)
-	    cbcolor = DFT_BCOLOR;
+        if (cfcolor == ENUM_UNKNOWN)
+            cfcolor = DFT_FCOLOR;
+        if (cbcolor == ENUM_UNKNOWN)
+            cbcolor = DFT_BCOLOR;
 
 	if (attr == VABOLD) {
 	    cfcolor |= FOREGROUND_INTENSITY;

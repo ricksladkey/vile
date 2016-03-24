@@ -547,7 +547,7 @@ typedef unsigned short	mode_t;
 				   are in pages	instead of rows (in vi,
 				   they're rows, and the argument is "sticky",
 				   i.e. it's remembered */
-#define OPT_PRETTIER_SCROLL 0	/* can improve the appearance of a scrolling
+#define OPT_PRETTIER_SCROLL 1	/* can improve the appearance of a scrolling
 				   screen, but it will in general be slower */
 #define OPT_STUTTER_SEC_CMD 0	/* must the next/prev section commands (i.e.
 				   ']]' and '[[' be stuttered?  they must be
